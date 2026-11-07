@@ -4,7 +4,7 @@ A free, offline Android app for detecting nearby NFC tags and saving their reada
 
 ## Download the Android app
 
-**[Download the APK (Android installer)](https://github.com/jettblue1488/Kays-NFC-History1312/releases/latest/download/Kays-NFC-History.apk)**
+**[Download the APK (Android installer)](https://github.com/jettblue1488/Kays-NFC-History1312/releases/latest/download/app-debug.apk)**
 
 [View GitHub Releases](https://github.com/jettblue1488/Kays-NFC-History1312/releases)
 

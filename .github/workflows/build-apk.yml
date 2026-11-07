@@ -39,7 +39,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "v1.1.0" "app/build/outputs/apk/debug/app-debug.apk#Kays-NFC-History.apk" \
-            --target "$GITHUB_SHA" \
-            --title "Kay's NFC History v1.1.0" \
-            --notes "Offline Android NFC tag history app. Supports automatic tag dispatch while the phone is unlocked and Android selects the app, as well as foreground scanning. NFC detection is normally unavailable while the screen is off or the phone is locked. This is a personal-use debug-signed APK, not a Google Play production release."
+          if gh release view "v1.1.0" >/dev/null 2>&1; then
+            gh release upload "v1.1.0" "app/build/outputs/apk/debug/app-debug.apk" --clobber
+          else
+            gh release create "v1.1.0" "app/build/outputs/apk/debug/app-debug.apk" \
+              --target "$GITHUB_SHA" \
+              --title "Kay's NFC History v1.1.0" \
+              --notes "Offline Android NFC tag history app. Supports automatic tag dispatch while the phone is unlocked and Android selects the app, as well as foreground scanning. NFC detection is normally unavailable while the screen is off or the phone is locked. This is a personal-use debug-signed APK, not a Google Play production release."
+          fi
