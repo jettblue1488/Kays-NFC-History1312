@@ -93,7 +93,7 @@ public final class MainActivity extends Activity implements NfcAdapter.ReaderCal
         content.addView(panel);
         status = text("Checking NFC…", 16, ink, true);
         panel.addView(status);
-        scanButton = button("Pause scanning", sea);
+        scanButton = button("Pause live scanning", sea);
         scanButton.setOnClickListener(v -> {
             scanWanted = !scanWanted;
             updateReaderMode();
@@ -105,13 +105,13 @@ public final class MainActivity extends Activity implements NfcAdapter.ReaderCal
             catch (Exception ex) { startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS)); }
         });
         panel.addView(settings);
-        panel.addView(text("Keep this screen open and unlocked while scanning. Touch the phone's NFC antenna to a tag to save a new event.", 13, ink, false), margin(0, 12, 0, 0));
+        panel.addView(text("Live scan works while this screen is open. Automatic capture can save supported tags while you use another app, provided the phone is unlocked and Android routes the tag to Kay's NFC History.", 13, ink, false), margin(0, 12, 0, 0));
 
         LinearLayout information = panel();
         content.addView(information, margin(0, 12, 0, 0));
         information.addView(text("Range & detection", 17, ink, true));
         information.addView(text("NFC range is limited by the phone's built-in antenna, usually just centimeters. This app uses Android's dedicated foreground reader mode, but software cannot boost NFC radio power or detect tags across a room.", 13, ink, false), margin(0, 6, 0, 0));
-        information.addView(text("Past encounters cannot be recovered unless another app or system previously logged them. Bank-card and phone NFC traffic cannot be passively monitored using standard Android NFC APIs.", 12, sea, false), margin(0, 8, 0, 0));
+        information.addView(text("Screen off / locked: Android usually stops ordinary NFC tag polling. This app cannot override that OS restriction. Past unlogged encounters cannot be recovered, and it cannot passively monitor other phones or payment transactions.", 12, sea, false), margin(0, 8, 0, 0));
 
         countLabel = text("History", 18, ink, true);
         content.addView(countLabel, margin(0, 22, 0, 6));
@@ -174,7 +174,7 @@ public final class MainActivity extends Activity implements NfcAdapter.ReaderCal
                 readerActive = false;
             }
             status.setText("NFC is off — enable it in Settings.");
-            scanButton.setText("Start scanning");
+            scanButton.setText("Start live scanning");
             return;
         }
         if (readerActive && (!scanWanted || !inForeground)) {
@@ -198,7 +198,7 @@ public final class MainActivity extends Activity implements NfcAdapter.ReaderCal
         }
         if (readerActive) status.setText("● NFC scanner active — bring a tag close");
         else if (!scanWanted) status.setText("Scanning paused");
-        scanButton.setText(scanWanted ? "Pause scanning" : "Start scanning");
+        scanButton.setText(scanWanted ? "Pause live scanning" : "Start live scanning");
     }
 
     @Override public void onTagDiscovered(Tag tag) {
