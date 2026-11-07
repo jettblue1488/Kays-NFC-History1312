@@ -2,22 +2,26 @@
 
 A free, offline Android app for detecting nearby NFC tags and saving their readable details on your phone.
 
-## What it does
+## Download the Android app
 
-- **Live scanning:** While the app is open, Android's foreground NFC reader mode captures supported NFC tags, with available UID, tag technology, optional NDEF contents and local timestamps.
-- **Automatic capture while the app is closed:** Android's tag dispatch system can start a small transparent capture activity for supported tag formats while the phone is **unlocked**, even if you are using another app. Depending on the tag, other installed apps and your Android version, you may be asked which app should handle a tag. The capture handler saves it locally without opening the full scanner UI.
-- **History:** Browse/search saved scans, export CSV or delete local records. No account, internet or cloud service required.
+**[Download the APK (Android installer)](https://github.com/jettblue1488/Kays-NFC-History1312/releases/latest/download/Kays-NFC-History.apk)**
 
-## Android hardware and operating-system limitations
+[View GitHub Releases](https://github.com/jettblue1488/Kays-NFC-History1312/releases)
 
-**Kay's NFC History cannot continuously read NFC while the phone is locked or the screen is off.** Standard Android NFC tag polling is generally disabled in those conditions. A foreground service cannot bypass this restriction. NFC requires close proximity to the phone's built-in antenna, typically a few centimeters. The app cannot passively inspect NFC transactions or reconstruct encounters that Android never logged.
+Tap the APK link on an Android phone, then open the downloaded file in Downloads/Files and allow installation from your browser if prompted. Enable NFC in Android Settings.
 
-Android uses its tag dispatch priority rules: other applications or the OS may claim some tags, so automatic capture is best-effort and cannot guarantee reception of every tag.
+This is a debug-signed personal-use APK. If Android rejects an update due to a signature mismatch, export any saved history before uninstalling the old app: uninstalling deletes its local history.
 
-## Build your APK
+## Features
 
-In GitHub: **Actions → Build Kay's NFC History APK → latest successful run → Artifacts → Kays-NFC-History-APK**. Download the ZIP, extract **app-debug.apk** and install it on an NFC-capable Android device.
+- **Live NFC scanning:** While the app is open, supported NFC tags can be read and saved with UID, tag technology, NDEF content (when readable), and time.
+- **Automatic capture while unlocked:** Android may send tag events to a transparent capture activity even if you are using another app; other apps or the OS can claim some tags. It is not continuous polling.
+- **Local history:** Search saved scans, export CSV, and delete local scans. No internet permission or account required.
 
-**Update note:** GitHub's standard debug signing key may change between Actions runners. If an update fails with an app-signature mismatch, export your history before uninstalling the previous APK; uninstalling deletes the local database. A persistent private signing keystore should be configured for production/distribution.
+## Limitations
 
-Android 8.0+ is supported. APK builds use Java 17 / Android Gradle Plugin 8.7.3 / Gradle 8.9. NFC data stays on the phone.
+**Locked/screen-off NFC:** Standard Android NFC polling is generally disabled while the phone is locked or the screen is off. A normal third-party app cannot override this limitation. NFC range is limited to centimeters by hardware. The app cannot recover previously unlogged scans or passively monitor NFC traffic from other devices.
+
+## For developers
+
+Open **Actions → Build and publish Kay's NFC History APK → latest successful run → Artifacts**, download the ZIP, and extract `app-debug.apk`. Gradle 8.9, Android Gradle Plugin 8.7.3 and Java 17 are used. The public release file is automatically uploaded on the next successful main-branch build. A production-quality app update system needs a persistent private signing key and release configuration, which this development workflow does not provide.
