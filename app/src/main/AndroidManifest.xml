@@ -5,7 +5,7 @@
 
     <application
         android:allowBackup="false"
-        android:label="Kay's NFC History"
+        android:label="Kay's NFC History 2"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="false">
         <activity
@@ -18,8 +18,8 @@
             </intent-filter>
         </activity>
 
-        <!-- NFC tag dispatch works while the app is not open, on devices that
-             poll NFC while unlocked. It does not keep NFC active when locked. -->
+        <!-- Available only when Android dispatches an NFC tag while unlocked.
+             Neither a service nor this receiver can force screen-off polling. -->
         <activity
             android:name=".TagCaptureActivity"
             android:exported="true"

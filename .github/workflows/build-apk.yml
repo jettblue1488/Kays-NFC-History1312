@@ -26,12 +26,17 @@ jobs:
         run: |
           echo "Android SDK: $ANDROID_HOME"
           test -d "$ANDROID_HOME/platforms"
+      - name: Restore debug signing key for consistent personal-test builds
+        uses: actions/cache@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: nfc-history-v2-debug-keystore-v1
       - name: Build installable debug APK
         run: gradle --no-daemon :app:assembleDebug
       - name: Upload APK to build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Kays-NFC-History-APK
+          name: Kays-NFC-History-2-APK
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
       - name: Publish installable APK on GitHub Releases
@@ -39,11 +44,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if gh release view "v1.1.0" >/dev/null 2>&1; then
-            gh release upload "v1.1.0" "app/build/outputs/apk/debug/app-debug.apk" --clobber
+          if gh release view "v1.2.0" >/dev/null 2>&1; then
+            gh release upload "v1.2.0" "app/build/outputs/apk/debug/app-debug.apk" --clobber
           else
-            gh release create "v1.1.0" "app/build/outputs/apk/debug/app-debug.apk" \
+            gh release create "v1.2.0" "app/build/outputs/apk/debug/app-debug.apk" \
               --target "$GITHUB_SHA" \
-              --title "Kay's NFC History v1.1.0" \
-              --notes "Offline Android NFC tag history app. Supports automatic tag dispatch while the phone is unlocked and Android selects the app, as well as foreground scanning. NFC detection is normally unavailable while the screen is off or the phone is locked. This is a personal-use debug-signed APK, not a Google Play production release."
+              --title "Kay's NFC History 2 — install conflict fix" \
+              --notes "This APK uses a different Android application ID, so it can install alongside the original Kay's NFC History without removing old local scan data. It starts with a new, separate scan history. Automatic NFC dispatch remains subject to Android NFC permissions and unlocked-screen behavior. This is a debug build for personal testing."
           fi

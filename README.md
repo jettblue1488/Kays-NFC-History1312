@@ -1,27 +1,26 @@
-# Kay's NFC History
+# Kay's NFC History 2 (Android)
 
-A free, offline Android app for detecting nearby NFC tags and saving their readable details on your phone.
+This release fixes the **App not installed as package conflicts with an existing package** error. It uses a new application ID so the new version can install beside the old Kay's NFC History app, even when the original APK has a different signature.
 
-## Download the Android app
+## Download
 
-**[Download the APK (Android installer)](https://github.com/jettblue1488/Kays-NFC-History1312/releases/latest/download/app-debug.apk)**
+**[Get Kay's NFC History 2 APK](https://github.com/jettblue1488/Kays-NFC-History1312/releases/download/v1.2.0/app-debug.apk)**
 
-[View GitHub Releases](https://github.com/jettblue1488/Kays-NFC-History1312/releases)
+Tap the link on the Android phone, open the downloaded APK and choose Install. It appears in the launcher as **Kay's NFC History 2**. You can keep the old app installed; do **not** uninstall it if it has saved scans you need.
 
-Tap the APK link on an Android phone, then open the downloaded file in Downloads/Files and allow installation from your browser if prompted. Enable NFC in Android Settings.
-
-This is a debug-signed personal-use APK. If Android rejects an update due to a signature mismatch, export any saved history before uninstalling the old app: uninstalling deletes its local history.
+**Important:** The old app's stored scans do not automatically migrate into this version, since Android isolates app storage between application IDs. You can export the old history to a CSV file before changing apps. Signing-key caching is for convenience in development; do not rely on it as a permanent release signing solution.
 
 ## Features
 
-- **Live NFC scanning:** While the app is open, supported NFC tags can be read and saved with UID, tag technology, NDEF content (when readable), and time.
-- **Automatic capture while unlocked:** Android may send tag events to a transparent capture activity even if you are using another app; other apps or the OS can claim some tags. It is not continuous polling.
-- **Local history:** Search saved scans, export CSV, and delete local scans. No internet permission or account required.
+- On-screen live NFC tag reader for compatible nearby tags.
+- Best-effort automatic tag dispatch when using another app and the phone is **unlocked**; Android may open a chooser or route the tag elsewhere.
+- Timestamped local NFC history, optional NDEF tag data, search and CSV export.
+- No network permissions or sign-in.
 
-## Limitations
+## NFC limitations
 
-**Locked/screen-off NFC:** Standard Android NFC polling is generally disabled while the phone is locked or the screen is off. A normal third-party app cannot override this limitation. NFC range is limited to centimeters by hardware. The app cannot recover previously unlogged scans or passively monitor NFC traffic from other devices.
+Normal Android apps cannot continuously poll NFC tags when the screen is off or the device is locked. The phone's antenna limits detection to close range, usually a few centimeters. The app cannot reconstruct old, unlogged NFC encounters.
 
-## For developers
+## Source / builds
 
-Open **Actions → Build and publish Kay's NFC History APK → latest successful run → Artifacts**, download the ZIP, and extract `app-debug.apk`. Gradle 8.9, Android Gradle Plugin 8.7.3 and Java 17 are used. The public release file is automatically uploaded on the next successful main-branch build. A production-quality app update system needs a persistent private signing key and release configuration, which this development workflow does not provide.
+The Android app is built through GitHub Actions under **Actions → Build and publish Kay's NFC History APK**, and the installable file appears under Releases as `app-debug.apk`. Android Gradle Plugin 8.7.3 / Gradle 8.9 / JDK 17. This is a personal-use debug APK.
