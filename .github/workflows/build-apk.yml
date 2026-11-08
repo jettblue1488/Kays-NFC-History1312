@@ -44,11 +44,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if gh release view "v1.2.0" >/dev/null 2>&1; then
-            gh release upload "v1.2.0" "app/build/outputs/apk/debug/app-debug.apk" --clobber
+          if gh release view "v1.3.0" >/dev/null 2>&1; then
+            gh release upload "v1.3.0" "app/build/outputs/apk/debug/app-debug.apk" --clobber
           else
-            gh release create "v1.2.0" "app/build/outputs/apk/debug/app-debug.apk" \
+            gh release create "v1.3.0" "app/build/outputs/apk/debug/app-debug.apk" \
               --target "$GITHUB_SHA" \
-              --title "Kay's NFC History 2 — install conflict fix" \
-              --notes "This APK uses a different Android application ID, so it can install alongside the original Kay's NFC History without removing old local scan data. It starts with a new, separate scan history. Automatic NFC dispatch remains subject to Android NFC permissions and unlocked-screen behavior. This is a debug build for personal testing."
+              --title "Kay's NFC History 2 — NDEF Copy & Write" \
+              --notes "Adds standard NDEF tag copy and write with capacity checks and confirmation. Does not clone protected cards, tag UIDs or payment credentials. Offline Android app."
           fi

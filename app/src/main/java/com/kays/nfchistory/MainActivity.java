@@ -105,6 +105,9 @@ public final class MainActivity extends Activity implements NfcAdapter.ReaderCal
             catch (Exception ex) { startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS)); }
         });
         panel.addView(settings);
+        Button copy = button("Read, Copy & Write NFC tags", sea);
+        copy.setOnClickListener(v -> startActivity(new Intent(this, NdefCopyActivity.class)));
+        panel.addView(copy, margin(0, 8, 0, 0));
         panel.addView(text("Live scan works while this screen is open. Automatic capture can save supported tags while you use another app, provided the phone is unlocked and Android routes the tag to Kay's NFC History.", 13, ink, false), margin(0, 12, 0, 0));
 
         LinearLayout information = panel();
